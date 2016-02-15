@@ -1,11 +1,12 @@
 // ******************************************************************************************* //
 //
 // File:         lab1p1.c
-// Date:         
-// Authors:      
+// Date:
+// Authors:
 //
 // Description: Part 1 for lab 1
 // ******************************************************************************************* //
+
 
 #include <xc.h>
 #include <sys/attribs.h>
@@ -13,68 +14,77 @@
 #include "interrupt.h"
 #include "switch.h"
 #include "timer.h"
+#include "config.h"
 
 
 /* Please note that the configuration file has changed from lab 0.
  * the oscillator is now of a different frequency.
  */
+#define press 0
+#define release 1
+
+typedef int bool;
+#define true    1
+#define false   0
+
 
 typedef enum stateTypeEnum {
-    led1, led2, wait//, debouncePress, debounceRelease, debounceRelease2
+    led1, led2, deBounce1, deBounce2
 } stateType;
 
-//TODO: Use volatile variables that change within interrupts
-volatile stateType state;
+volatile stateType state, stateNext;
+//volatile bool dbCount = false;
+
 int main(void)
 {
     SYSTEMConfigPerformance(10000000);
-    
-    initTimer2();
     initTimer1();
     initSW2();
     initLEDs();
+    enableInterrupts();
+    state = led1;
+
     while(1)
     {
         //TODO: Using a finite-state machine, define the behavior of the LEDs
         //Debounce the switch
         switch(state){
             case led1:
-                TMR1 = 0;
-                delayUs(20);
                 turnOnLED(1);
-                if(PORTDbits.RD6 == 1){
-                    state = wait;
-                }
+				stateNext = led2;
                 break;
+
             case led2:
-                TMR1 = 0;
-                delayUs(20);
                 turnOnLED(2);
-                if(PORTDbits.RD6 == 1){
-                    state = wait;
-                }
+				stateNext = led1;
                 break;
-            case wait:
-                if(PORTDbits.RD6 == 1){
-                    state = wait;
-                }
-                else if(LATDbits.LATD0 == 1 && PORTDbits.RD6== 0){
-                    state = led2;
-                }
-                else if (LATDbits.LATD1 == 1 && PORTDbits.RD6== 0 ){
-                    state = led1;
-                }
+
+            case deBounce1:
+                delayUs(10000);
+				break;
+            case deBounce2:
+                delayUs(10000);
                 break;
-                
         }
-        
-        
     }
-    
+
     return 0;
 }
 
-void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SRS) _CNInterrupt(void){
+void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt(void){
     //TODO: Implement the interrupt to capture the press of the button
-
+    IFS1bits.CNGIF = 0;
+    PORTG;
+	if(state == led1 && PORTGbits.RG13 == press) {
+        state = deBounce1;
+    }
+    else if (state == led2 && PORTGbits.RG13 == press) {
+        state = deBounce2;
+    }
+    else if(state == deBounce1 && PORTGbits.RG13 == release) {
+        state = led2;
+    }
+    else if(state == deBounce2 && PORTGbits.RG13 == release) {
+        state = led1;
+    }
 }

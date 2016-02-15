@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   interrupt.c
  * Author: gvanhoy
  *

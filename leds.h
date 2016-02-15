@@ -1,6 +1,6 @@
-/* 
+/*
 * File:   leds.h
-* Author: 
+* Author:
 *
 * Created on December 27, 2014, 1:31 PM
 */
@@ -12,4 +12,3 @@ void initLEDs();
 void turnOnLED(int led);
 
 #endif	/* LEDS_H */
-
