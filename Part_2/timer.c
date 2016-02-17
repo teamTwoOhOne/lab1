@@ -1,9 +1,11 @@
-/*
- * File:   timer.c
- * Authors:
- *
- * Created on December 30, 2014, 8:07 PM
- */
+//-----------------------------------------//
+// ECE 372A Spring 2016
+// Lab Group 201:
+// Zachary Finsterwald
+// Zakir Mukhida
+// Jimmy Lacey
+// Raun Rongguo
+//-----------------------------------------//
 
 #include <xc.h>
 #include "timer.h"

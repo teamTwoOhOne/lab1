@@ -1,12 +1,11 @@
-/*
- * File:   lcd.c
- * Authors:
- *
- * Created on December 31, 2014, 1:39 PM
- */
-
-/* TODO: Make define statements for each pin used in the LCD
- */
+    //-----------------------------------------//
+    // ECE 372A Spring 2016
+    // Lab Group 201:
+    // Zachary Finsterwald
+    // Zakir Mukhida
+    // Jimmy Lacey
+    // Raun Rongguo
+    //-----------------------------------------//
 
 #include <xc.h>
 #include "lcd.h"
@@ -44,13 +43,6 @@
 #define true 1
 #define false 0
 
-#define E_DELAY 500
-
-#define max_lines   2
-#define max_chars   16
-#define line_one    0x80
-#define line_two    0xc0
-
 void toggleEnable(unsigned int delay)
 {
     LAT_E = 1;
@@ -64,7 +56,7 @@ void setData(int db7, int db6, int db5, int db4)
     LAT_D7 = db7;
     LAT_D6 = db6;
     LAT_D5 = db5;
-    LAT_D4 = db4;  
+    LAT_D4 = db4;
 }
 
 /* This function should take in a two-byte word and writes either the lower or upper
@@ -75,9 +67,9 @@ void setData(int db7, int db6, int db5, int db4)
  * when you are simply writing a character. Otherwise, RS is '0'.
  */
 void writeFourBits(unsigned char word, unsigned int command_type, unsigned int delay_after, unsigned int lower){
-    
+
     LAT_RS  = command_type;  // SET RS
-    
+
     setData(0,0,0,0);       // Make pins zero
     if(lower == true) {
         LAT_D4  =  word&0x01;
@@ -109,40 +101,31 @@ void printCharLCD(char c) {
 /*Initialize the LCD
  */
 void initLCD(void) {
-    // Setup D, RS, and E to be outputs (0).
+    // DATA PORTS
     TRIS_D7 = OUTPUT;
     TRIS_D6 = OUTPUT;
     TRIS_D5 = OUTPUT;
     TRIS_D4 = OUTPUT;
-    
+    // RS AND ENABLE
     TRIS_RS = OUTPUT;
     TRIS_E  = OUTPUT;
-    
-    // Initilization sequence utilizes specific LCD commands before the general configuration
-    // commands can be utilized. The first few initilition commands cannot be done using the
-    // WriteLCD function. Additionally, the specific sequence and timing is very important.
-    
+
     //----- BEGIN SEQUENCE -----//
 
-    delay_us(4000);
-    delay_us(4000);
-    delay_us(4000);
-    delay_us(4000);
+    delay_ms(40);
     
+    // SPECIFIC SEQUENCE
     writeLCD(0x03, 0, 4500);
     writeLCD(0x03, 0, 110);
     writeLCD(0x03, 0, 50);
     writeLCD(0x02, 0, 50);
-    
-    
-    writeLCD(0x28, 0, 500);
-    writeLCD(0x0d, 0, 500);
-    writeLCD(0x01, 0, 500);
-    writeLCD(0x06, 0, 500);
-    
-    
+    // END
 
-    
+    writeLCD(0x28, 0, 500); // FUNCTION SET
+    writeLCD(0x0C, 0, 500); // DISPLAY ON, CURSOR OFF, BLINK OFF
+    writeLCD(0x01, 0, 500); // CLEAR DISPLAY
+    writeLCD(0x06, 0, 500); // ENTRY MODE, SET INCREMENT
+
     //----- END SEQUENCE -----//
 }
 
@@ -161,8 +144,8 @@ void printStringLCD(const char* s) {
  */
 void clearLCD(){
     unsigned char word = 0x01;
-    writeLCD(word, 0, 1400); // clear display
-    moveCursorLCD('1', '1');
+    writeLCD(word, 0, 1400); // CLEAR COMMAND
+    moveCursorLCD('1', '1'); // RESET POSITION
 }
 
 /*
