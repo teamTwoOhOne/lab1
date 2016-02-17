@@ -7,6 +7,7 @@
 
 /* TODO: Make define statements for each pin used in the LCD
  */
+
 #include <xc.h>
 #include "lcd.h"
 #include "timer.h"
@@ -22,16 +23,49 @@
  * help you debug your implementation!
  */
 
-#define LCD_DATA  
-#define LCD_RS  
-#define LCD_E   
-
 #define TRIS_D7 TRISEbits.TRISE1
 #define TRIS_D6 TRISEbits.TRISE3
 #define TRIS_D5 TRISEbits.TRISE5
 #define TRIS_D4 TRISEbits.TRISE7
+
 #define TRIS_RS TRISCbits.TRISC4
 #define TRIS_E  TRISCbits.TRISC2
+
+#define LAT_D7 LATEbits.LATE1
+#define LAT_D6 LATEbits.LATE3
+#define LAT_D5 LATEbits.LATE5
+#define LAT_D4 LATEbits.LATE7
+
+#define LAT_RS LATCbits.LATC4
+#define LAT_E  LATCbits.LATC2
+
+#define OUTPUT  0
+
+#define true 1
+#define false 0
+
+#define E_DELAY 500
+
+#define max_lines   2
+#define max_chars   16
+#define line_one    0x80
+#define line_two    0xc0
+
+void toggleEnable(unsigned int delay)
+{
+    LAT_E = 1;
+    delay_us(500);
+    LAT_E = 0;
+    delay_us(delay);
+}
+
+void setData(int db7, int db6, int db5, int db4)
+{
+    LAT_D7 = db7;
+    LAT_D6 = db6;
+    LAT_D5 = db5;
+    LAT_D4 = db4;  
+}
 
 /* This function should take in a two-byte word and writes either the lower or upper
  * byte to the last four bits of LATE. Additionally, according to the LCD data sheet
@@ -39,73 +73,77 @@
  * After these commands are issued, there should be a delay.
  * The command type is a simplification. From the data sheet, the RS is '1'
  * when you are simply writing a character. Otherwise, RS is '0'.
- */ 
-void writeFourBits(unsigned char word, unsigned int commandType, unsigned int delayAfter, unsigned int lower){
-    //TODO:
-    // set the commandType (RS value)
-    if(lower==0){
-    LATEbits.LATE0 = (word&0x01);
-    LATEbits.LATE2 = (word&0x02)>> 1;
-    LATEbits.LATE4 = (word&0x04)>> 2;
-    LATEbits.LATE6 = (word&0x08)>> 3;
-    }
-    if(lower==1){
-    LATEbits.LATE0 = (word <<3)>> 7;    
-    LATEbits.LATE2 = (word <<2)>> 7;
-    LATEbits.LATE4 = (word <<1)>> 7;
-    LATEbits.LATE6 = (word)>> 7;
-    }
+ */
+void writeFourBits(unsigned char word, unsigned int command_type, unsigned int delay_after, unsigned int lower){
     
+    LAT_RS  = command_type;  // SET RS
     
-    LCD_RS = commandType; //D3
-    delayUs(1);
-    LCD_E = 1;
-    delayUs(1); //
-    LCD_E = 0; // D5
-    delayUs(delayAfter);
-    //enable
-    //delay
-    //disable
+    setData(0,0,0,0);       // Make pins zero
+    if(lower == true) {
+        LAT_D4  =  word&0x01;
+        LAT_D5  = (word>>1)&0x01;
+        LAT_D6  = (word>>2)&0x01;
+        LAT_D7  = (word>>3)&0x01;
+    } else {
+        LAT_D4  = (word>>4)&0x01;
+        LAT_D5  = (word>>5)&0x01;
+        LAT_D6  = (word>>6)&0x01;
+        LAT_D7  = (word>>7)&0x01;
+    }
+    toggleEnable(delay_after);
 }
 
 /* Using writeFourBits, this function should write the two bytes of a character
  * to the LCD.
  */
-void writeLCD(unsigned char word, unsigned int commandType, unsigned int delayAfter){
-    
+void writeLCD(unsigned char word, unsigned int command_type, unsigned int delay_after){
+    writeFourBits(word, command_type, delay_after, 0);
+    writeFourBits(word, command_type, delay_after, 1);
 }
- writeFourBits(word, commandType, delayAfter, 1); //upper letter
- writeFourBits(word, commandType, delayAfter, 0); // lower letter 
 
 /* Given a character, write it to the LCD. RS should be set to the appropriate value.
  */
 void printCharLCD(char c) {
-    //TODO:
-    writeLCD(c, LCD_WRITE_DATA, 46);
+    writeLCD(c, 1, 500);
 }
 /*Initialize the LCD
  */
 void initLCD(void) {
     // Setup D, RS, and E to be outputs (0).
-
+    TRIS_D7 = OUTPUT;
+    TRIS_D6 = OUTPUT;
+    TRIS_D5 = OUTPUT;
+    TRIS_D4 = OUTPUT;
+    
+    TRIS_RS = OUTPUT;
+    TRIS_E  = OUTPUT;
+    
     // Initilization sequence utilizes specific LCD commands before the general configuration
     // commands can be utilized. The first few initilition commands cannot be done using the
     // WriteLCD function. Additionally, the specific sequence and timing is very important.
+    
+    //----- BEGIN SEQUENCE -----//
 
-    // Enable 4-bit interface
+    delay_us(4000);
+    delay_us(4000);
+    delay_us(4000);
+    delay_us(4000);
+    
+    writeLCD(0x03, 0, 4500);
+    writeLCD(0x03, 0, 110);
+    writeLCD(0x03, 0, 50);
+    writeLCD(0x02, 0, 50);
+    
+    
+    writeLCD(0x28, 0, 500);
+    writeLCD(0x0d, 0, 500);
+    writeLCD(0x01, 0, 500);
+    writeLCD(0x06, 0, 500);
+    
+    
 
-    // Function Set (specifies data width, lines, and font.
-
-    // 4-bit mode initialization is complete. We can now configure the various LCD
-    // options to control how the LCD will function.
-
-    // TODO: Display On/Off Control
-        // Turn Display (D) Off
-    // TODO: Clear Display (The delay is not specified in the data sheet at this point. You really need to have the clear display delay here.
-    // TODO: Entry Mode Set
-        // Set Increment Display, No Shift (i.e. cursor move)
-    // TODO: Display On/Off Control
-        // Turn Display (D) On, Cursor (C) Off, and Blink(B) Off
+    
+    //----- END SEQUENCE -----//
 }
 
 /*
@@ -114,33 +152,30 @@ void initLCD(void) {
  * Since a string is just a character array, try to be clever with your use of pointers.
  */
 void printStringLCD(const char* s) {
-    //TODO:
-    int i;
-    for (i = 0; i < strlen(s); i++) {
-        printCharLCD(s[i]);
-
-    }
+    while(*s)
+        printCharLCD(*s++);
 }
 
 /*
  * Clear the display.
  */
 void clearLCD(){
-
-    writeLCD(0x01, 0, 1640);
-    moveCursorLCD(0, 0);
+    unsigned char word = 0x01;
+    writeLCD(word, 0, 1400); // clear display
+    moveCursorLCD('1', '1');
 }
+
 /*
  Use the command for changing the DD RAM address to put the cursor somewhere.
  */
 void moveCursorLCD(unsigned char x, unsigned char y){
-    if (x == 0) {
-        writeLCD(0x80 + y, 0, 40);
-
-    }
-    if (x == 1) {
-        writeLCD(0xC0 + y, 0, 40);
-    }
+    unsigned char address;
+    unsigned char row, col;
+    row = x&(0x0f);
+    col = y&(0x0f);
+    address = (col - 1)*0x40 + (row);
+    address = address + 0x80;
+    writeLCD(address, 0, 500);
 }
 
 /*
@@ -149,14 +184,16 @@ void moveCursorLCD(unsigned char x, unsigned char y){
  * However, it is suggested that you test more than just this one function.
  */
 void testLCD(){
-    initLCD();
+    clearLCD();
+    moveCursorLCD(1,1);
     int i = 0;
     printCharLCD('c');
-    for(i = 0; i < 1000; i++) delayUs(1000);
+    for(i = 0; i < 4000; i++) delay_us(1000);
     clearLCD();
+    moveCursorLCD(1,1);
     printStringLCD("Hello!");
     moveCursorLCD(1, 2);
-    for(i = 0; i < 1000; i++) delayUs(1000);
+    for(i = 0; i < 4000; i++) delay_us(1000);
     printStringLCD("Hello!");
-    for(i = 0; i < 1000; i++) delayUs(1000);
+    for(i = 0; i < 4000; i++) delay_us(1000);
 }

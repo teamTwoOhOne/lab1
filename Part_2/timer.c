@@ -8,20 +8,34 @@
 #include <xc.h>
 #include "timer.h"
 
-void delayUs(unsigned int delay) {
-    TMR2 = 0; //clear timer 2
-    PR2 = (delay * 10) - 1;
-    IFS0bits.T2IF = 0; //put flag down
-    T2CONbits.ON = 1; //turn on timer 2
-    while (IFS0bits.T2IF == 0) {
-    };
-    T2CONbits.ON = 0; //stop timer 2
+void initTimer2()
+{
+    TMR2            = 0;    // CLEAR TIMER
+    T2CONbits.TCKPS = 1;    // SET PRE-SCALAR TO 8
+    T2CONbits.TCS   = 0;    // SELECT INTERNAL OSCILLATOR
+    IFS0bits.T2IF   = 0;    // PUT DOWN FLAG
 }
 
-void initTimer2() {
-    TMR2 = 0; //clear timer 2
-    T2CONbits.TCKPS = 3; //initial prescalar to 8
-    T2CONbits.TCS = 0; //setting the oscillator
-    IFS0bits.T2IF = 0; //put flag down
+void delay_us(unsigned int delay)
+{
+    TMR2                = 0;            // CLEAR TIMER
+    PR2                 = delay;   // CALCULATE WAIT COUNT
+    IFS0bits.T2IF       = 0;            // PUT DOWN FLAG
+    T2CONbits.ON        = 1;            // TURN ON TIMER
+    while(
+        IFS0bits.T2IF   == 0            // WAIT
+    );
+    T2CONbits.ON        = 0;            // TURN OFF TIMER
+}
 
+void delay_ms(unsigned int delay)
+{
+    TMR2                = 0;            // CLEAR TIMER
+    PR2                 = delay * 1000; // CALCULATE WAIT COUNT
+    IFS0bits.T2IF       = 0;            // PUT DOWN FLAG
+    T2CONbits.ON        = 1;            // TURN ON TIMER
+    while(
+        IFS0bits.T2IF   == 0            // WAIT
+    );
+    T2CONbits.ON        = 0;            // TURN OFF TIMER
 }

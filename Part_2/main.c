@@ -4,7 +4,7 @@
 // Date:         12-30-2014
 // Authors:      Garrett Vanhoy
 //
-// Description: 
+// Description:
 // ******************************************************************************************* //
 
 #include <xc.h>
@@ -22,11 +22,11 @@ int main(void)
     SYSTEMConfigPerformance(10000000);
     initTimer2();
     initLCD();
-    
+    clearLCD();
     while(1)
     {
-        testLCD();
+       testLCD();
     }
-    
+
     return 0;
 }
