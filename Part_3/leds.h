@@ -8,7 +8,7 @@
 #ifndef LEDS_H
 #define	LEDS_H
 
-void initLEDs();
-void turnOnLED(int led);
+void init_leds();
+void turn_on_led(int led);
 
 #endif	/* LEDS_H */

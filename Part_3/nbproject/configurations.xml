@@ -4,12 +4,12 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>../../Desktop/lab1-master/Part_1/config.h</itemPath>
-      <itemPath>../../Desktop/lab1-master/Part_1/interrupt.h</itemPath>
-      <itemPath>../../Desktop/lab1-master/Part_1/leds.h</itemPath>
-      <itemPath>../../Desktop/lab1-master/Part_1/switch.h</itemPath>
-      <itemPath>../../Desktop/lab1-master/Part_1/timer.h</itemPath>
-      <itemPath>../../Desktop/lab1-master/Part_2/lcd.h</itemPath>
+      <itemPath>config.h</itemPath>
+      <itemPath>interrupt.h</itemPath>
+      <itemPath>lcd.h</itemPath>
+      <itemPath>leds.h</itemPath>
+      <itemPath>switch.h</itemPath>
+      <itemPath>timer.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -18,23 +18,19 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>../../Desktop/lab1-master/Part_2/lcd.c</itemPath>
-      <itemPath>../../Desktop/lab1-master/Part_1/interrupt.c</itemPath>
-      <itemPath>../../Desktop/lab1-master/Part_1/leds.c</itemPath>
-      <itemPath>../../Desktop/lab1-master/Part_1/main.c</itemPath>
-      <itemPath>../../Desktop/lab1-master/Part_1/switch.c</itemPath>
-      <itemPath>../../Desktop/lab1-master/Part_1/timer.c</itemPath>
+      <itemPath>interrupt.c</itemPath>
+      <itemPath>lcd.c</itemPath>
+      <itemPath>leds.c</itemPath>
+      <itemPath>main.c</itemPath>
+      <itemPath>switch.c</itemPath>
+      <itemPath>timer.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
-      <itemPath>../../Desktop/lab1-master/Part_2/Makefile</itemPath>
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
-  <sourceRootList>
-    <Elem>../../Desktop/lab1-master/Part_2</Elem>
-    <Elem>../../Desktop/lab1-master/Part_1</Elem>
-  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">

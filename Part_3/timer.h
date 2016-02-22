@@ -1,14 +1,18 @@
-/*
- * File:   timer.h
- * Author:
- *
- * Created on December 30, 2014, 8:07 PM
- */
+//-----------------------------------------//
+// ECE 372A Spring 2016
+// Lab Group 201:
+// Zachary Finsterwald
+// Zakir Mukhida
+// Jimmy Lacey
+// Raun Rongguo
+//-----------------------------------------//
 
 #ifndef INITTIMER_H
 #define	INITTIMER_H
 
-void initTimer1();
-void delayUs(unsigned int delay);
+void init_timer_1();
+void init_timer_2();
+void delay_us(unsigned int delay);
+void delay_ms(unsigned int delay);
 
 #endif	/* INITTIMER_H */

@@ -1,16 +1,17 @@
-// ******************************************************************************************* //
-//
-// File:         lab1p1.c
-// Date:
-// Authors:
-//
-// Description: Part 1 for lab 1
-// ******************************************************************************************* //
+//-----------------------------------------//
+// ECE 372A Spring 2016
+// Lab Group 201:
+// Zachary Finsterwald
+// Zakir Mukhida
+// Jimmy Lacey
+// Raun Rongguo
+//-----------------------------------------//
 
 
 #include <xc.h>
 #include <sys/attribs.h>
 #include "leds.h"
+#include "lcd.h"
 #include "interrupt.h"
 #include "switch.h"
 #include "timer.h"
@@ -29,58 +30,69 @@ typedef int bool;
 
 
 typedef enum stateTypeEnum {
-     initial, stopped, running, deBounce1, deBounce2
+    run, stop, reset_1, reset_2, deBounce1, deBounce2
 } stateType;
 
-volatile stateType state, stateNext;
-//volatile bool dbCount = false;
-
-int min;
-int sec;
+volatile stateType state;
+volatile unsigned int ms_count;
 
 int main(void)
 {
+    // * INITIALIZE * //
     SYSTEMConfigPerformance(10000000);
-    //initTimer1();
-    initSW1();
-    initSW2();
-    initLEDs();
-    initLCD();
+    init_timer_1();
+    init_timer_2();
+    init_sw1();
+    init_sw2();
+    init_leds();
+    init_lcd();
+    clear_lcd();
     enableInterrupts();
-    state = running;
+    state = stop;
+    ms_count = 0;
+    //----------------//
 
-    clearLCD();
-    
+    unsigned int min, sec, ms = 0;
+
     while(1)
     {
-        //TODO: Using a finite-state machine, define the behavior of the LEDs
-        //Debounce the switch
-        switch(state){
-            case stopped:
-                turnOnLED(2);
-                clearLCD();
-                moveCursorLCD(1,1);
-                printStringLCD("Stopped:")
-                moveCursorLCD(1,2);
-                printStringLCD(getTimeString(min,sec)); ///////Ruan will include function's code in LCD.c
-				stateNext = running;
-                break;
-            case running:
-                initTimer1();
-                turnOnLED(1);
-                clearLCD();
-                moveCursorLCD(1,1);
-                printStringLCD("Running:")
-                moveCursorLCD(1,2);
-                printStringLCD(getTimeString(min,sec));
-				stateNext = stopped;
-                break;
+        min     =   ms_count / 60000;
+        sec     = ( ms_count % 60000) / 1000;
+        ms      = ((ms_count % 60000) % 1000) / 10;
 
+        switch(state){
+            case run:
+                turn_on_led(1);
+                move_cursor_lcd(0,1);
+                print_string_lcd("Running:");
+                T1CONbits.ON    = 1;
+                display_time_lcd(min, sec, ms);
+                break;
+            case stop:
+                turn_on_led(2);
+                move_cursor_lcd(0,1);
+                T1CONbits.ON    = 0;
+                print_string_lcd("Stopped:");
+                move_cursor_lcd(0,2);
+                display_time_lcd(min, sec, ms);
+                break;
+            case reset_1:
+                clear_lcd();
+                state = reset_2;
+                break;
+            case reset_2:
+                move_cursor_lcd(1,1);
+                print_string_lcd("RESET");
+                ms_count = 0;
+                state = stop;
+                break;
             case deBounce1:
-                delayUs(10000);
+                clear_lcd();
+                delay_us(10000);
 				break;
             case deBounce2:
-                delayUs(10000);
+                clear_lcd();
+                delay_us(10000);
                 break;
         }
     }
@@ -88,40 +100,32 @@ int main(void)
     return 0;
 }
 
-void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt(void){
-    //TODO: Implement the interrupt to capture the press of the button
+// Button Interrupt
+void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt(void)
+{
     IFS1bits.CNGIF = 0;
+    IFS1bits.CNDIF = 0;
     PORTG;
-    
-    if(state == running && PORTGbits.RG13 == press) {
-        T1CONbits.ON = 0;      //disable timer when not in 'running' state
-        state = deBounce1;
+    PORTD;
+    if(PORTDbits.RD6 == 0) {
+      state = reset_1;
     }
-    else if (state == stopped && PORTGbits.RG13 == press) {
-        state = deBounce1;
+    else if(state == run && PORTGbits.RG13 == press) {
+      state = deBounce1;
+    }
+    else if (state == stop && PORTGbits.RG13 == press) {
+      state = deBounce2;
     }
     else if(state == deBounce1 && PORTGbits.RG13 == release) {
-        state = stateNext;
+      state = stop;
     }
-    else if (state == stopped && PORTDbits.RD6 == press) {
-        state = deBounce2;
+    else if(state == deBounce2 && PORTGbits.RG13 == release) {
+      state = run;
     }
-    else if (state == deBounce2 && PORTDbits.RD6 == release) {
-        sec = 0;
-        min = 0;
-        state = stopped;
-    }  //PORTDbits.RD6
 }
-void __ISR(_TIMER_1_VECTOR, IPL3SRS) _T1Interrupt(){
-    IFS0bits.T1IF = 0;
-    sec += 1;
-    if (sec > 5999) {
-        min += 1;
-        sec = 0;
-    }
-    clearLCD();
-    moveCursorLCD(1,1);
-    printStringLCD("Running:")
-    moveCursorLCD(1,2);
-    printStringLCD(getTimeString(min,sec));
+
+// Timer Interrupt
+void __ISR(_TIMER_1_VECTOR, IPL7SRS) _T1Interupt(){
+    IFS0bits.T1IF = 0;    // PUT DOWN FLAG
+    ms_count++;
 }

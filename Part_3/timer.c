@@ -10,45 +10,49 @@
 #include <xc.h>
 #include "timer.h"
 
-void initTimer1(){
-    TMR1 = 0;
-    PR1 = 99999;           //(0.01*10000000)/1 -1
-    T1CONbits.TCKPS = 3;
-    T1CONbits.TCS = 0;
-    IEC0bits.T1IE = 1;
-    IFS0bits.T1IF = 0;
-    IPC1bits.T1IP = 3;
-    T1CONbits.ON = 1;
+#define PRESCALAR_256   3
+#define PRESCALAR_8     1
+#define PRESCALAR_1     0
+
+void init_timer_1(){
+    TMR1            = 0;                // Keeps Count
+    T1CONbits.TCKPS = PRESCALAR_8;      // Configure ticking rate
+    PR1             = 999;              // 1 MilliSec - Period Register
+    T1CONbits.ON    = 0;                // Turn off Timer
+    IFS0bits.T1IF   = 0;                // Put down the interrupt flag
+    IEC0bits.T1IE   = 1;                // Enable interupt
+    IPC1bits.T1IP   = 7;                // Timer 1 Priority
 }
 
-void initTimer2()
+void init_timer_2()
 {
-    TMR2            = 0;    // CLEAR TIMER
-    T2CONbits.TCKPS = 1;    // SET PRE-SCALAR TO 8
-    T2CONbits.TCS   = 0;    // SELECT INTERNAL OSCILLATOR
-    IFS0bits.T2IF   = 0;    // PUT DOWN FLAG
+    TMR2            = 0;                // CLEAR TIMER
+    T2CONbits.TCKPS = PRESCALAR_8;      // SET PRE-SCALAR TO 8
+    T2CONbits.TCS   = 0;                // SELECT INTERNAL OSCILLATOR
+    IFS0bits.T2IF   = 0;                // PUT DOWN FLAG
 }
+
 
 void delay_us(unsigned int delay)
 {
-    TMR2                = 0;            // CLEAR TIMER
-    PR2                 = delay;   // CALCULATE WAIT COUNT
-    IFS0bits.T2IF       = 0;            // PUT DOWN FLAG
-    T2CONbits.ON        = 1;            // TURN ON TIMER
+    TMR2                = 0;                // CLEAR TIMER
+    PR2                 = delay - 1;        // CALCULATE WAIT COUNT
+    IFS0bits.T2IF       = 0;                // PUT DOWN FLAG
+    T2CONbits.ON        = 1;                // TURN ON TIMER
     while(
-        IFS0bits.T2IF   == 0            // WAIT
+        IFS0bits.T2IF   == 0                // WAIT
     );
-    T2CONbits.ON        = 0;            // TURN OFF TIMER
+    T2CONbits.ON        = 0;                // TURN OFF TIMER
 }
 
 void delay_ms(unsigned int delay)
 {
-    TMR2                = 0;            // CLEAR TIMER
-    PR2                 = delay * 1000; // CALCULATE WAIT COUNT
-    IFS0bits.T2IF       = 0;            // PUT DOWN FLAG
-    T2CONbits.ON        = 1;            // TURN ON TIMER
+    TMR2                = 0;                // CLEAR TIMER
+    PR2                 = delay * 1000 - 1; // CALCULATE WAIT COUNT
+    IFS0bits.T2IF       = 0;                // PUT DOWN FLAG
+    T2CONbits.ON        = 1;                // TURN ON TIMER
     while(
-        IFS0bits.T2IF   == 0            // WAIT
+        IFS0bits.T2IF   == 0                // WAIT
     );
-    T2CONbits.ON        = 0;            // TURN OFF TIMER
+    T2CONbits.ON        = 0;                // TURN OFF TIMER
 }

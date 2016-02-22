@@ -30,12 +30,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=elf
 DEBUGGABLE_SUFFIX=elf
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/lab1Pt3.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Part_3.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=hex
 DEBUGGABLE_SUFFIX=elf
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/lab1Pt3.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Part_3.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 endif
 
 # Object Directory
@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=../../Desktop/lab1-master/Part_2/lcd.c ../../Desktop/lab1-master/Part_1/interrupt.c ../../Desktop/lab1-master/Part_1/leds.c ../../Desktop/lab1-master/Part_1/main.c ../../Desktop/lab1-master/Part_1/switch.c ../../Desktop/lab1-master/Part_1/timer.c
+SOURCEFILES_QUOTED_IF_SPACED=interrupt.c lcd.c leds.c main.c switch.c timer.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1029052387/lcd.o ${OBJECTDIR}/_ext/1029052388/interrupt.o ${OBJECTDIR}/_ext/1029052388/leds.o ${OBJECTDIR}/_ext/1029052388/main.o ${OBJECTDIR}/_ext/1029052388/switch.o ${OBJECTDIR}/_ext/1029052388/timer.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1029052387/lcd.o.d ${OBJECTDIR}/_ext/1029052388/interrupt.o.d ${OBJECTDIR}/_ext/1029052388/leds.o.d ${OBJECTDIR}/_ext/1029052388/main.o.d ${OBJECTDIR}/_ext/1029052388/switch.o.d ${OBJECTDIR}/_ext/1029052388/timer.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/interrupt.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/leds.o ${OBJECTDIR}/main.o ${OBJECTDIR}/switch.o ${OBJECTDIR}/timer.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/interrupt.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/leds.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/switch.o.d ${OBJECTDIR}/timer.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/_ext/1029052387/lcd.o ${OBJECTDIR}/_ext/1029052388/interrupt.o ${OBJECTDIR}/_ext/1029052388/leds.o ${OBJECTDIR}/_ext/1029052388/main.o ${OBJECTDIR}/_ext/1029052388/switch.o ${OBJECTDIR}/_ext/1029052388/timer.o
+OBJECTFILES=${OBJECTDIR}/interrupt.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/leds.o ${OBJECTDIR}/main.o ${OBJECTDIR}/switch.o ${OBJECTDIR}/timer.o
 
 # Source Files
-SOURCEFILES=../../Desktop/lab1-master/Part_2/lcd.c ../../Desktop/lab1-master/Part_1/interrupt.c ../../Desktop/lab1-master/Part_1/leds.c ../../Desktop/lab1-master/Part_1/main.c ../../Desktop/lab1-master/Part_1/switch.c ../../Desktop/lab1-master/Part_1/timer.c
+SOURCEFILES=interrupt.c lcd.c leds.c main.c switch.c timer.c
 
 
 CFLAGS=
@@ -75,7 +75,7 @@ FIXDEPS=fixDeps
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/lab1Pt3.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Part_3.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=32MX470F512L
 MP_LINKER_FILE_OPTION=
@@ -94,78 +94,78 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/_ext/1029052387/lcd.o: ../../Desktop/lab1-master/Part_2/lcd.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052387" 
-	@${RM} ${OBJECTDIR}/_ext/1029052387/lcd.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052387/lcd.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052387/lcd.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052387/lcd.o.d" -o ${OBJECTDIR}/_ext/1029052387/lcd.o ../../Desktop/lab1-master/Part_2/lcd.c     
+${OBJECTDIR}/interrupt.o: interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/interrupt.o.d 
+	@${RM} ${OBJECTDIR}/interrupt.o 
+	@${FIXDEPS} "${OBJECTDIR}/interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/interrupt.o.d" -o ${OBJECTDIR}/interrupt.o interrupt.c     
 	
-${OBJECTDIR}/_ext/1029052388/interrupt.o: ../../Desktop/lab1-master/Part_1/interrupt.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052388" 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/interrupt.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/interrupt.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052388/interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052388/interrupt.o.d" -o ${OBJECTDIR}/_ext/1029052388/interrupt.o ../../Desktop/lab1-master/Part_1/interrupt.c     
+${OBJECTDIR}/lcd.o: lcd.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/lcd.o.d 
+	@${RM} ${OBJECTDIR}/lcd.o 
+	@${FIXDEPS} "${OBJECTDIR}/lcd.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/lcd.o.d" -o ${OBJECTDIR}/lcd.o lcd.c     
 	
-${OBJECTDIR}/_ext/1029052388/leds.o: ../../Desktop/lab1-master/Part_1/leds.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052388" 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/leds.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/leds.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052388/leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052388/leds.o.d" -o ${OBJECTDIR}/_ext/1029052388/leds.o ../../Desktop/lab1-master/Part_1/leds.c     
+${OBJECTDIR}/leds.o: leds.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/leds.o.d 
+	@${RM} ${OBJECTDIR}/leds.o 
+	@${FIXDEPS} "${OBJECTDIR}/leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/leds.o.d" -o ${OBJECTDIR}/leds.o leds.c     
 	
-${OBJECTDIR}/_ext/1029052388/main.o: ../../Desktop/lab1-master/Part_1/main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052388" 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/main.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/main.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052388/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052388/main.o.d" -o ${OBJECTDIR}/_ext/1029052388/main.o ../../Desktop/lab1-master/Part_1/main.c     
+${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d" -o ${OBJECTDIR}/main.o main.c     
 	
-${OBJECTDIR}/_ext/1029052388/switch.o: ../../Desktop/lab1-master/Part_1/switch.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052388" 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/switch.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/switch.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052388/switch.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052388/switch.o.d" -o ${OBJECTDIR}/_ext/1029052388/switch.o ../../Desktop/lab1-master/Part_1/switch.c     
+${OBJECTDIR}/switch.o: switch.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/switch.o.d 
+	@${RM} ${OBJECTDIR}/switch.o 
+	@${FIXDEPS} "${OBJECTDIR}/switch.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/switch.o.d" -o ${OBJECTDIR}/switch.o switch.c     
 	
-${OBJECTDIR}/_ext/1029052388/timer.o: ../../Desktop/lab1-master/Part_1/timer.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052388" 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/timer.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/timer.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052388/timer.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052388/timer.o.d" -o ${OBJECTDIR}/_ext/1029052388/timer.o ../../Desktop/lab1-master/Part_1/timer.c     
+${OBJECTDIR}/timer.o: timer.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/timer.o.d 
+	@${RM} ${OBJECTDIR}/timer.o 
+	@${FIXDEPS} "${OBJECTDIR}/timer.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/timer.o.d" -o ${OBJECTDIR}/timer.o timer.c     
 	
 else
-${OBJECTDIR}/_ext/1029052387/lcd.o: ../../Desktop/lab1-master/Part_2/lcd.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052387" 
-	@${RM} ${OBJECTDIR}/_ext/1029052387/lcd.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052387/lcd.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052387/lcd.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052387/lcd.o.d" -o ${OBJECTDIR}/_ext/1029052387/lcd.o ../../Desktop/lab1-master/Part_2/lcd.c     
+${OBJECTDIR}/interrupt.o: interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/interrupt.o.d 
+	@${RM} ${OBJECTDIR}/interrupt.o 
+	@${FIXDEPS} "${OBJECTDIR}/interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/interrupt.o.d" -o ${OBJECTDIR}/interrupt.o interrupt.c     
 	
-${OBJECTDIR}/_ext/1029052388/interrupt.o: ../../Desktop/lab1-master/Part_1/interrupt.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052388" 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/interrupt.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/interrupt.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052388/interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052388/interrupt.o.d" -o ${OBJECTDIR}/_ext/1029052388/interrupt.o ../../Desktop/lab1-master/Part_1/interrupt.c     
+${OBJECTDIR}/lcd.o: lcd.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/lcd.o.d 
+	@${RM} ${OBJECTDIR}/lcd.o 
+	@${FIXDEPS} "${OBJECTDIR}/lcd.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/lcd.o.d" -o ${OBJECTDIR}/lcd.o lcd.c     
 	
-${OBJECTDIR}/_ext/1029052388/leds.o: ../../Desktop/lab1-master/Part_1/leds.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052388" 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/leds.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/leds.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052388/leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052388/leds.o.d" -o ${OBJECTDIR}/_ext/1029052388/leds.o ../../Desktop/lab1-master/Part_1/leds.c     
+${OBJECTDIR}/leds.o: leds.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/leds.o.d 
+	@${RM} ${OBJECTDIR}/leds.o 
+	@${FIXDEPS} "${OBJECTDIR}/leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/leds.o.d" -o ${OBJECTDIR}/leds.o leds.c     
 	
-${OBJECTDIR}/_ext/1029052388/main.o: ../../Desktop/lab1-master/Part_1/main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052388" 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/main.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/main.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052388/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052388/main.o.d" -o ${OBJECTDIR}/_ext/1029052388/main.o ../../Desktop/lab1-master/Part_1/main.c     
+${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d" -o ${OBJECTDIR}/main.o main.c     
 	
-${OBJECTDIR}/_ext/1029052388/switch.o: ../../Desktop/lab1-master/Part_1/switch.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052388" 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/switch.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/switch.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052388/switch.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052388/switch.o.d" -o ${OBJECTDIR}/_ext/1029052388/switch.o ../../Desktop/lab1-master/Part_1/switch.c     
+${OBJECTDIR}/switch.o: switch.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/switch.o.d 
+	@${RM} ${OBJECTDIR}/switch.o 
+	@${FIXDEPS} "${OBJECTDIR}/switch.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/switch.o.d" -o ${OBJECTDIR}/switch.o switch.c     
 	
-${OBJECTDIR}/_ext/1029052388/timer.o: ../../Desktop/lab1-master/Part_1/timer.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1029052388" 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/timer.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1029052388/timer.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1029052388/timer.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1029052388/timer.o.d" -o ${OBJECTDIR}/_ext/1029052388/timer.o ../../Desktop/lab1-master/Part_1/timer.c     
+${OBJECTDIR}/timer.o: timer.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/timer.o.d 
+	@${RM} ${OBJECTDIR}/timer.o 
+	@${FIXDEPS} "${OBJECTDIR}/timer.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/timer.o.d" -o ${OBJECTDIR}/timer.o timer.c     
 	
 endif
 
@@ -178,15 +178,15 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: link
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/lab1Pt3.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/Part_3.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -mdebugger -D__MPLAB_DEBUGGER_PK3=1 -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/lab1Pt3.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}              -mreserve=boot@0x1FC02000:0x1FC02FEF -mreserve=boot@0x1FC02000:0x1FC0275F  -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PK3=1,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -mdebugger -D__MPLAB_DEBUGGER_PK3=1 -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/Part_3.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}              -mreserve=boot@0x1FC02000:0x1FC02FEF -mreserve=boot@0x1FC02000:0x1FC0275F  -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PK3=1,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/lab1Pt3.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/Part_3.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/lab1Pt3.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}            -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml
-	${MP_CC_DIR}\\xc32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/lab1Pt3.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} 
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/Part_3.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}            -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml
+	${MP_CC_DIR}\\xc32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/Part_3.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} 
 endif
 
 

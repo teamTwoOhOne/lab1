@@ -1,14 +1,17 @@
-/* 
- * File:   switch.h
- * Author: Garrett
- *
- * Created on September 19, 2015, 10:46 AM
- */
+//-----------------------------------------//
+// ECE 372A Spring 2016
+// Lab Group 201:
+// Zachary Finsterwald
+// Zakir Mukhida
+// Jimmy Lacey
+// Raun Rongguo
+//-----------------------------------------//
 
 #ifndef SWITCH_H
 #define	SWITCH_H
 
-void initSW2();
+void init_sw1();
+void init_sw2();
 
 
 #endif	/* SWITCH_H */
