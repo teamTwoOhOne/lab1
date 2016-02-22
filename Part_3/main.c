@@ -17,20 +17,11 @@
 #include "timer.h"
 #include "config.h"
 
-
-/* Please note that the configuration file has changed from lab 0.
- * the oscillator is now of a different frequency.
- */
 #define press 0
 #define release 1
 
-typedef int bool;
-#define true    1
-#define false   0
-
-
 typedef enum stateTypeEnum {
-    run, stop, reset_1, reset_2, deBounce1, deBounce2
+    run, stop, reset_1, reset_2, debounce_1, debounce_2
 } stateType;
 
 volatile stateType state;
@@ -86,13 +77,13 @@ int main(void)
                 ms_count = 0;
                 state = stop;
                 break;
-            case deBounce1:
-                clear_lcd();
-                delay_us(10000);
+            case debounce_1:
+                T1CONbits.ON    = 0;
+                delay_us(1000);
 				break;
-            case deBounce2:
-                clear_lcd();
-                delay_us(10000);
+            case debounce_2:
+                T1CONbits.ON    = 0;
+                delay_us(1000);
                 break;
         }
     }
@@ -111,15 +102,15 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt(void)
       state = reset_1;
     }
     else if(state == run && PORTGbits.RG13 == press) {
-      state = deBounce1;
+      state = debounce_1;
     }
     else if (state == stop && PORTGbits.RG13 == press) {
-      state = deBounce2;
+      state = debounce_2;
     }
-    else if(state == deBounce1 && PORTGbits.RG13 == release) {
+    else if(state == debounce_1 && PORTGbits.RG13 == release) {
       state = stop;
     }
-    else if(state == deBounce2 && PORTGbits.RG13 == release) {
+    else if(state == debounce_2 && PORTGbits.RG13 == release) {
       state = run;
     }
 }
